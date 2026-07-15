@@ -1,1 +1,1 @@
-# Simulación-para-sistemas-interactivos
+# Simulación para sistemas interactivos
