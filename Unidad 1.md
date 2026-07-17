@@ -9,7 +9,7 @@ show() {
 
 ## Actividad 3
 *En tus propias palabras cuál es la diferencia entre una distribución uniforme y una no uniforme de números aleatorios.*  
-La distribución uniforme no tiene numero preferido y la probabilidad es repartida uniformemente y la no unifome  
+La distribución uniforme no tiene numero preferido y la probabilidad es repartida uniformemente y la no unifome es lo contrario 
 
 *Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.*  
 
