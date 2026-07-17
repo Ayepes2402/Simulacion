@@ -6,7 +6,8 @@ show() {
     stroke(44, 21, 84);
     square(this.x, this.y,40);
 ```
-<img width="633" height="243" alt="image" src="https://github.com/user-attachments/assets/88f3da4a-3a62-431b-9cc9-914ade3a074f" />
+<img width="609" height="226" alt="image" src="https://github.com/user-attachments/assets/99210562-b0f0-4faa-a2fe-760fee042706" />
+
 
 
 ## Actividad 3
