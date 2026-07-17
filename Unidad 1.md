@@ -6,20 +6,33 @@ show() {
     stroke(44, 21, 84);
     square(this.x, this.y,40);
 ```
-<img width="609" height="226" alt="image" src="https://github.com/user-attachments/assets/99210562-b0f0-4faa-a2fe-760fee042706" />
-
-
+<img width="609" height="226" alt="image" src="https://github.com/user-attachments/assets/99210562-b0f0-4faa-a2fe-760fee042706" />  
 
 ## Actividad 3
-*En tus propias palabras cuál es la diferencia entre una distribución uniforme y una no uniforme de números aleatorios.*  
+**En tus propias palabras cuál es la diferencia entre una distribución uniforme y una no uniforme de números aleatorios.**  
 La distribución uniforme no tiene numero preferido y la probabilidad es repartida uniformemente y la no unifome es lo contrario 
 
-*Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.*  
+**Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.**    
+  ```js
+ step() {
+    const choice = floor(random(4));
+   if (choice < 0.4) {
+      this.x++;
+    } else if (choice < 0.6) {
+      this.x--;
+    } else if (choice < 2) {
+      this.y++;
+    } else if (choice > 2) {
+      this.y--;
+    }
+```
+<img width="604" height="219" alt="image" src="https://github.com/user-attachments/assets/5e8d7d00-4748-4cb2-9bea-be88f8606e5e" />  
+
 
 ## Actividad 4  
-*Crea un nuevo sketch en p5.js que represente una distribución normal, pero visualizándola de manera diferente a la del ejemplo.*  
+**Crea un nuevo sketch en p5.js que represente una distribución normal, pero visualizándola de manera diferente a la del ejemplo.**  
 
 
 ## Actividad 5
-*Explica por qué usaste esta técnica y qué resultados esperabas obtener.*  
+**Explica por qué usaste esta técnica y qué resultados esperabas obtener.**  
 
