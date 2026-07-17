@@ -6,6 +6,8 @@ show() {
     stroke(44, 21, 84);
     square(this.x, this.y,40);
 ```
+<img width="633" height="243" alt="image" src="https://github.com/user-attachments/assets/88f3da4a-3a62-431b-9cc9-914ade3a074f" />
+
 
 ## Actividad 3
 *En tus propias palabras cuál es la diferencia entre una distribución uniforme y una no uniforme de números aleatorios.*  
