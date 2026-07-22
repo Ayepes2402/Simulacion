@@ -111,5 +111,53 @@ Al comienzo me costó un poco entender cómo usar el Lévy flight, así que empe
 
 ## Actividad 6  
 **Crea un nuevo sketch en p5.js donde los visualices.**  
+```js
+let t = 0;
+let walker;
+
+function setup() {
+  createCanvas(400, 400);
+  background(255);
+  walker = new Walker();
+}
+
+function draw() {
+  walker.step();
+  walker.show();
+}
+
+class Walker {
+  constructor() {
+    this.x = 0;
+    this.y = height / 2;
+  }
+
+  show() {
+    noStroke();
+    fill(120, 70, 255, 40);
+    circle(this.x, this.y, 10);
+  }
+
+  step() {
+    let velocidad = map(noise(t), 0, 1, 1, 5);
+    this.x += velocidad;
+
+ 
+    this.y = map(noise(t + 50), 0, 1, 120, 280);
+
+    if (this.x > width) {
+      this.x = 0;
+      background(255);
+    }
+
+    t += 0.02;
+  }
+}
+```
+<img width="289" height="236" alt="image" src="https://github.com/user-attachments/assets/a8cf95b9-c936-4151-83ce-8447f3243b8b" />  
+  
+
 **Explica por qué lo visualizaste de esa manera y qué resultados esperabas obtener.**  
+
+Quise usar el ruido Perlin para que el movimiento del punto no fuera siempre igual. Por eso hice que cambiara tanto la velocidad como la altura de forma suave mientras avanzaba por la pantalla. Esperaba que el recorrido se viera más natural y continuo, mostrando cómo el ruido Perlin genera cambios progresivos en lugar de movimientos bruscos.
 
