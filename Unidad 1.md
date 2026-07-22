@@ -10,6 +10,7 @@ show() {
 
 ## Actividad 3
 **En tus propias palabras cuál es la diferencia entre una distribución uniforme y una no uniforme de números aleatorios.**  
+
 La distribución uniforme no tiene numero preferido y la probabilidad es repartida uniformemente y la no unifome es lo contrario 
 
 **Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.**    
@@ -54,6 +55,59 @@ Aquí se usa la distribución normal para controlar el tamaño de los círculos 
 
 ## Actividad 5
 **Explica por qué usaste esta técnica y qué resultados esperabas obtener.**  
+
+```js
+let walker;
+
+function setup() {
+  createCanvas(400, 400);
+  background(255);
+  walker = new Walker();
+}
+
+function draw() {
+  walker.step();
+  walker.show();
+}
+
+class Walker {
+  constructor() {
+    this.x = width / 2;
+    this.y = height / 2;
+  }
+
+  show() {
+    noStroke();
+    fill(147, 70, 255, 40); // Morado estilo Vegetta777
+    circle(this.x, this.y, 8);
+  }
+
+  step() {
+    let angle = random(TWO_PI);
+    let stepSize;
+
+   
+    if (random(1) < 0.05) {
+      stepSize = random(40, 80);
+    } else {
+      stepSize = random(1, 3);
+    }
+
+    this.x += cos(angle) * stepSize;
+    this.y += sin(angle) * stepSize;
+
+
+    this.x = constrain(this.x, 0, width);
+    this.y = constrain(this.y, 0, height);
+  }
+}
+```
+
+<img width="289" height="287" alt="image" src="https://github.com/user-attachments/assets/e50d8d21-8466-4714-95e3-ac3e1ec16bbb" />   
+
+**Explica por qué usaste esta técnica y qué resultados esperabas obtener.**   
+
+Al comienzo me costó un poco entender cómo usar el Lévy flight, así que empecé haciendo pruebas. Al final decidí mantener la idea de un punto que se mueve por la pantalla, pero cambié la forma en la que avanza para que casi siempre diera pasos cortos y solo algunas veces hiciera un salto largo. Con eso buscaba que el recorrido se viera más dinámico y diferente a un movimiento completamente aleatorio.
 
 ## Actividad 6  
 **Crea un nuevo sketch en p5.js donde los visualices.**  
