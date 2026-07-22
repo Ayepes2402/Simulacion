@@ -50,6 +50,8 @@ function draw() {
 ```
 <img width="298" height="299" alt="image" src="https://github.com/user-attachments/assets/a558cdff-24f4-4d83-a4f0-53885eada5d8" />   
 
+Aquí se usa la distribución normal para controlar el tamaño de los círculos en lugar de su posición. Así los círculos aparecen en posiciones aleatorias, pero la mayoría tendrán un tamaño parecido y solo unos pocos serán muy pequeños o muy grandes.  
+
 ## Actividad 5
 **Explica por qué usaste esta técnica y qué resultados esperabas obtener.**  
 
