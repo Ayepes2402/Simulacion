@@ -162,24 +162,35 @@ class Walker {
 Quise usar el ruido Perlin para que el movimiento del punto no fuera siempre igual. Por eso hice que cambiara tanto la velocidad como la altura de forma suave mientras avanzaba por la pantalla. Esperaba que el recorrido se viera más natural y continuo, mostrando cómo el ruido Perlin genera cambios progresivos en lugar de movimientos bruscos.
 
 ## Actividad 7 Reto de diseño  
-Como la contaminación está afectando cada vez más al planeta, especialmente a los polos, me gustaría crear una experiencia interactiva que ayude a las personas a entender cómo el aumento de temperatura está causando el derretimiento de los glaciares.
+Como la contaminación y el cambio climático están afectando al planeta, especialmente a los polos, quiero crear una experiencia interactiva que muestre cómo estos ecosistemas pueden cambiar con el paso del tiempo.
 
-La idea es que los usuarios puedan observar cómo diferentes factores pueden cambiar el estado de los polos y cómo nuestras acciones tienen consecuencias en el medio ambiente. Con esta experiencia busco generar conciencia sobre la importancia de cuidar el planeta y mostrar que el futuro de estos ecosistemas depende de las decisiones que tomemos actualmente.
+La idea es representar cómo el deterioro puede avanzar rápidamente, pero también cómo eventos poco probables y las acciones humanas pueden ayudar a que el ecosistema se recupere lentamente. Con esto busco generar conciencia sobre cómo nuestras decisiones actuales pueden influir en el futuro del planeta.
+**"A destruccion de un ecosistema es mucho mas rapida que su recuperacion"**
 
-**Posibilidad**  
-El futuro de los polos depende de muchas variables como la temperatura, la contaminación y las acciones humanas, por eso es difícil saber exactamente qué camino tomará. Cada pequeño cambio puede generar un resultado diferente, representando la incertidumbre del planeta frente al cambio climático.  
+**Posibilidad:**
+El ecosistema tiene diferentes futuros posibles. Puede seguir deteriorándose con el paso del tiempo o puede encontrar una forma de recuperarse dependiendo de los eventos que ocurran.
 
-**Tendencia**  
-El derretimiento del hielo es un proceso que aumenta poco a poco debido al incremento de la temperatura. Pequeños cambios repetidos durante mucho tiempo generan una dirección clara: la pérdida de hielo y la transformación del ecosistema polar.
+**Tendencia:**
+La mayoría de las veces el ecosistema sigue una dirección de destrucción debido a los cambios negativos que se acumulan poco a poco. Estos pequeños daños hacen que con los años el ambiente pierda su equilibrio.
 
-**Normalidad**  
-El equilibrio del ecosistema polar representa el estado natural donde el hielo, los animales y el clima mantienen una relación estable. Cuando las condiciones permanecen constantes, el ecosistema sigue un comportamiento conocido y predecible.  
+**Normalidad:**
+Lo más común es que el ecosistema continúe su proceso normal de deterioro, donde el paso del tiempo representa cómo los daños se acumulan y afectan cada vez más la vida del lugar.
 
-**Excepción**  
-Un cambio inesperado en el clima puede alterar completamente el comportamiento del ecosistema, creando un nuevo escenario que antes parecía imposible. Un evento poco común puede acelerar el derretimiento o generar una oportunidad de recuperación.   
+**Excepción:**
+Algunos eventos poco probables pueden cambiar el futuro del ecosistema. Estas situaciones representan momentos de esperanza donde la naturaleza puede recuperarse y volver a crecer poco a poco.
 
-**Influencia**  
-La presencia del ser humano modifica directamente el futuro de los polos. Nuestras acciones pueden aumentar el daño al ecosistema o ayudar a reducirlo, demostrando que aunque el futuro sea incierto, nuestras decisiones tienen la capacidad de cambiar el resultado.
+**Influencia:**
+La interacción del visitante representa la ayuda humana para proteger el ecosistema. Al intervenir, el tiempo avanza más lento, mostrando que recuperar la naturaleza toma mucho más tiempo y esfuerzo que destruirla.
+
+**Ideas descartadas**  
+Antes de hacer este me quise ir por el lado de las gemas y queria hacer como unas geodas pero no funcionaron bien y salian bien feas entonces mejor descarte la idea por lo triste que quedé al verla  
+<img width="421" height="359" alt="Captura de pantalla 2026-07-23 201304" src="https://github.com/user-attachments/assets/3ef41ff8-9efc-47f8-80a7-53d07936cf9f" />  
+
+Despues en vez de geodas traté con el crecimiento Dendrítico (Copos / Minerales de Manganeso) pero tampoco me gustó y sentí que era o muy básico o no cumplia con lo pedido  
+<img width="272" height="227" alt="Captura de pantalla 2026-07-23 203036" src="https://github.com/user-attachments/assets/c6271ed8-211c-4ac9-b5cd-39024ad8938b" />  
+<img width="290" height="295" alt="Captura de pantalla 2026-07-23 203118" src="https://github.com/user-attachments/assets/7452f994-75e1-46ff-a0e8-29a086fbf56e" />
+<img width="269" height="266" alt="Captura de pantalla 2026-07-23 203551" src="https://github.com/user-attachments/assets/f51bcaa2-f525-4f62-b0d3-bc6d122c1b44" />
+
 
 
 
