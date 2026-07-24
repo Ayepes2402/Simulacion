@@ -1180,8 +1180,8 @@ function drawHUD(influenciaActiva) {
 
 **Links**  
 <a name="ej4"></a>
-[prototipo sin mejora de diseño](https://editor.p5js.org/Ayepes2402/sketches/QyeTzFMVk)   
-[prototipo con mejora de diseño](https://editor.p5js.org/Ayepes2402/sketches/QURmtWrVO).
+[Prototipo sin mejora de diseño](https://editor.p5js.org/Ayepes2402/sketches/QyeTzFMVk)   
+[Prototipo con mejora de diseño](https://editor.p5js.org/Ayepes2402/sketches/QURmtWrVO)
 
 **Uso conceptos de la unidad**  
 <a name="ej2"></a>
