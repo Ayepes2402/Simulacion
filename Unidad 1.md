@@ -189,8 +189,14 @@ Antes de hacer este me quise ir por el lado de las gemas y queria hacer como una
 Despues en vez de geodas traté con el crecimiento Dendrítico (Copos / Minerales de Manganeso) pero tampoco me gustó y sentí que era o muy básico o no cumplia con lo pedido  
 <img width="272" height="227" alt="Captura de pantalla 2026-07-23 203036" src="https://github.com/user-attachments/assets/c6271ed8-211c-4ac9-b5cd-39024ad8938b" />  
 <img width="290" height="295" alt="Captura de pantalla 2026-07-23 203118" src="https://github.com/user-attachments/assets/7452f994-75e1-46ff-a0e8-29a086fbf56e" />  
-<img width="269" height="266" alt="Captura de pantalla 2026-07-23 203551" src="https://github.com/user-attachments/assets/f51bcaa2-f525-4f62-b0d3-bc6d122c1b44" />
-<img width="387" height="516" alt="image" src="https://github.com/user-attachments/assets/11d947c8-c332-4bc1-8268-10fd4e6bd3d7" />
+<img width="269" height="266" alt="Captura de pantalla 2026-07-23 203551" src="https://github.com/user-attachments/assets/f51bcaa2-f525-4f62-b0d3-bc6d122c1b44" />  
+**Referencia del ultimo**  
+<img width="287" height="216" alt="image" src="https://github.com/user-attachments/assets/11d947c8-c332-4bc1-8268-10fd4e6bd3d7" />  
+
+Luego intenté con el cerebro pero tampoco funcionó y no me gustó, se podría decir que se veia bien pero ya de ahí no mucho más  
+<img width="286" height="437" alt="Captura de pantalla 2026-07-23 204213" src="https://github.com/user-attachments/assets/46c08320-1143-4692-b906-54498d7bba5d" />  
+
+
 
 
 
