@@ -165,7 +165,7 @@ Quise usar el ruido Perlin para que el movimiento del punto no fuera siempre igu
 Como la contaminación y el cambio climático están afectando al planeta, especialmente a los polos, quiero crear una experiencia interactiva que muestre cómo estos ecosistemas pueden cambiar con el paso del tiempo.
 
 La idea es representar cómo el deterioro puede avanzar rápidamente, pero también cómo eventos poco probables y las acciones humanas pueden ayudar a que el ecosistema se recupere lentamente. Con esto busco generar conciencia sobre cómo nuestras decisiones actuales pueden influir en el futuro del planeta.
-**"A destruccion de un ecosistema es mucho mas rapida que su recuperacion"**
+**"La destruccion de un ecosistema es mucho mas rapida que su recuperacion"**
 
 **Posibilidad:**
 El ecosistema tiene diferentes futuros posibles. Puede seguir deteriorándose con el paso del tiempo o puede encontrar una forma de recuperarse dependiendo de los eventos que ocurran.
@@ -209,6 +209,546 @@ Despues perdió hasta la forma y no parecía nada
 <img width="293" height="330" alt="Captura de pantalla 2026-07-23 213718" src="https://github.com/user-attachments/assets/99e66c58-83fd-44fc-8c17-6a6732706615" />  
 <img width="296" height="311" alt="Captura de pantalla 2026-07-23 214019" src="https://github.com/user-attachments/assets/10898903-8f26-4338-ad6e-3108f96883f6" />  
 <img width="320" height="374" alt="Captura de pantalla 2026-07-23 213807" src="https://github.com/user-attachments/assets/67be393a-9d1d-4d0c-b0f8-3077e68c0d2e" />
+
+Ya despues de muchos intentos por fin logré un código decente  
+```js
+let hielo = 100;
+let temperatura = 0; // 0 = frío polar, 100 = calor extremo
+let particulas = [];
+
+function setup() {
+  createCanvas(800, 500);
+  noCursor(); // Ocultamos el cursor normal para crear un efecto de "halo de calor" personalizado
+}
+
+function draw() {
+  // 1. CIELO DINÁMICO (Cambia de un azul aurora boreal a un tono naranja/rojo por el calor)
+  let r = map(temperatura, 0, 100, 135, 230);
+  let g = map(temperatura, 0, 100, 206, 120);
+  let b = map(temperatura, 0, 100, 250, 80);
+  background(r, g, b);
+
+  // Estrellas sutiles o partículas de aire frío si hay poco calor
+  if (temperatura < 40) {
+    fill(255, 150);
+    noStroke();
+    ellipse(random(width), random(height / 2), 2, 2);
+  }
+
+  // 2. OCÉANO (Crece a medida que el hielo disminuye)
+  let alturaOcean = map(hielo, 100, 0, 150, 320);
+  fill(14, 116, 144);
+  noStroke();
+  rect(0, height - alturaOcean, width, alturaOcean);
+
+  // Reflejos suaves en el agua
+  fill(6, 182, 212, 100);
+  rect(0, height - alturaOcean, width, 10);
+
+  // 3. EL GLACIAR (Estructura poligonal y elegante que se derrite)
+  let alturaGlaciar = map(hielo, 0, 100, 10, 220);
+  
+  // Dibujar capas de hielo con transparencias para dar profundidad
+  fill(224, 242, 254, 230);
+  beginShape();
+  vertex(100, height - alturaOcean);
+  vertex(200, height - alturaOcean - alturaGlaciar * 0.8);
+  vertex(350, height - alturaOcean - alturaGlaciar);
+  vertex(500, height - alturaOcean - alturaGlaciar * 0.9);
+  vertex(650, height - alturaOcean - alturaGlaciar * 0.4);
+  vertex(750, height - alturaOcean);
+  endShape(CLOSE);
+
+  // 4. FAUNA VULNERABLE (Un tierno oso polar o pingüino que depende del hielo)
+  if (hielo > 15) {
+    fill(255);
+    // Pequeño oso polar estático sobre el hielo
+    let xOso = 350;
+    let yOso = height - alturaOcean - alturaGlaciar - 15;
+    ellipse(xOso, yOso, 35, 25); // Cuerpo
+    ellipse(xOso + 12, yOso - 10, 18, 18); // Cabeza
+    fill(0);
+    ellipse(xOso + 18, yOso - 12, 3, 3); // Ojo
+  }
+
+  // 5. INFLUENCIA DEL CURSOR (El calor humano al pasar por encima)
+  // Calculamos si el mouse se está moviendo sobre el área del glaciar
+  let distanciaAlGlaciar = dist(mouseX, mouseY, width / 2, height - 200);
+  
+  if (mouseY < height - 100 && mouseY > 50) {
+    // Al pasar el mouse, generamos calor y partículas de vapor/derretimiento
+    temperatura = min(100, temperatura + 0.3);
+    hielo = max(0, hielo - 0.25);
+    
+    // Crear partículas visuales de calor/agua
+    if (frameCount % 3 === 0) {
+      particulas.push({
+        x: mouseX + random(-10, 10),
+        y: mouseY + random(-10, 10),
+        alpha: 255
+      });
+    }
+  } else {
+    // Tendencia natural: se recupera poquísimo si no hay humanos, pero el calor base persiste
+    temperatura = max(0, temperatura - 0.05);
+  }
+
+  // Dibujar y actualizar partículas de calor del cursor
+  for (let i = particulas.length - 1; i >= 0; i--) {
+    let p = particulas[i];
+    fill(255, 255, 255, p.alpha);
+    noStroke();
+    ellipse(p.x, p.y, 6, 6);
+    p.y -= 1; // Suben como vapor
+    p.alpha -= 10;
+    if (p.alpha <= 0) {
+      particulas.splice(i, 1);
+    }
+  }
+
+  // 6. CURSOR PERSONALIZADO (Halo de calor humano)
+  noFill();
+  stroke(255, 80, 80, 150);
+  strokeWeight(3);
+  ellipse(mouseX, mouseY, 40, 40);
+  fill(255, 100, 100, 50);
+  noStroke();
+  ellipse(mouseX, mouseY, 25, 25);
+
+  // 7. PANEL DE INTERFAZ ESTÉTICA
+  fill(15, 23, 42, 210);
+  noStroke();
+  rect(width / 2 - 250, 20, 500, 50, 25);
+
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(14);
+  text(`Calor Humano: ${temperatura.toFixed(0)}%  |  Masa Polar: ${hielo.toFixed(1)}%`, width / 2, 45);
+
+  // Mensaje final poético
+  if (hielo <= 0) {
+    fill(15, 23, 42, 230);
+    rect(0, 0, width, height);
+    fill(255, 100, 100);
+    textSize(28);
+    text("El ecosistema ha colapsado.", width / 2, height / 2 - 20);
+    fill(255);
+    textSize(16);
+    text("Nuestra presencia invisible dejó huella. El futuro depende de nuestras decisiones.", width / 2, height / 2 + 25);
+  } else {
+    // Texto guía inferior
+    fill(255, 220);
+    textSize(13);
+    text("Pasa el cursor suavemente sobre la pantalla para sentir la influencia del ser humano en el clima.", width / 2, height - 25);
+  }
+}
+````
+En este al menos ya estaba el iceberg, el agua y un animal y ya al menos tenia forma chahaha  
+<img width="589" height="357" alt="Captura de pantalla 2026-07-23 220739" src="https://github.com/user-attachments/assets/1610b7b2-f4ce-408f-9225-b765adb9513e" />  
+
+Despues lo intente cambiar para que tuviera al menos tres conceptos de la unidad añadiendo probabilidades en el iceberg, copos de nieve, al derretir hielo y al salvarlo  
+````js
+let hielo = 80;
+let temperatura = 30;
+let particulas = [];
+let tPerlin = 0;
+let walkX = 225; // Caminata aleatoria constante para la Tendencia
+
+function setup() {
+  createCanvas(450, 800); // Formato vertical 9:16
+  noCursor();
+}
+
+function draw() {
+  // 1. CONCEPTO 1: RUIDO PERLIN (Clima base constante, continuo y autónomo)
+  tPerlin += 0.004;
+  let climaRuido = noise(tPerlin);
+
+  let mouseDentro = (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height);
+  let influenciaActiva = mouseDentro && (mouseY < height - 100 && mouseY > 50);
+
+  // Inercia térmica: La temperatura evoluciona de forma fluida y orgánica
+  let tempBase = map(climaRuido, 0, 1, 15, 60);
+  
+  if (influenciaActiva) {
+    // Al interactuar, el calor sube de manera sostenida
+    temperatura += (85 - temperatura) * 0.04;
+  } else {
+    // Sin interacción, busca el clima base del ruido Perlin lentamente
+    temperatura += (tempBase - temperatura) * 0.02;
+  }
+  temperatura = constrain(temperatura, 10, 95);
+
+  // COMPORTAMIENTO ASIMÉTRICO DE DESHIELO Y RECUPERACIÓN (Derretimiento más rápido)
+  if (temperatura > 45) {
+    // El hielo se reduce más rápido de manera proporcional al exceso de calor
+    hielo -= (temperatura - 45) * 0.0038;
+  } else {
+    // Recuperar hielo es un proceso sumamente lento y acumulativo (no un rebote instantáneo)
+    hielo += (45 - temperatura) * 0.0004;
+  }
+  hielo = constrain(hielo, 5, 95);
+
+  // CIELO DINÁMICO
+  let r = map(temperatura, 0, 100, 120, 225);
+  let g = map(temperatura, 0, 100, 190, 105);
+  let b = map(temperatura, 0, 100, 240, 65);
+  background(r, g, b);
+
+  // MOMENTO - POSIBILIDAD Y NORMALIDAD: Uso de randomGaussian() para que la mayoría 
+  // de las trayectorias permanezcan cerca de lo habitual (distribución en campana alrededor de walkX)
+  if (random(1) < 0.3) {
+    let xNormal = walkX + randomGaussian(0, 50);
+    xNormal = constrain(xNormal, 20, width - 20);
+    particulas.push({
+      x: xNormal,
+      y: random(height * 0.4),
+      vx: random(-1.5, 1.5),
+      vy: random(-1.5, 1.5),
+      tipo: 'posibilidad',
+      alpha: random(80, 200)
+    });
+  }
+
+  // MOMENTO - EXCEPCIÓN: Evento improbable que descubre un territorio nuevo
+  if (random(1) < 0.005) {
+    particulas.push({
+      x: random(width),
+      y: random(height * 0.5, height * 0.75),
+      vx: random(-3, 3),
+      vy: random(-2, 2),
+      tipo: 'excepcion',
+      alpha: 255
+    });
+  }
+
+  // 2. CONCEPTO 2: CAMINATA ALEATORIA (Tendencia constante y suave)
+  if (frameCount % 20 === 0) {
+  if (random(1) < 0.6) {
+    walkX += random(1, 4);
+  } else {
+    walkX -= random(1, 4);
+  }
+}
+
+walkX = constrain(walkX, 90, width - 90);
+
+  // OCÉANO
+  let alturaOcean = map(hielo, 100, 0, 180, 500);
+  fill(14, 116, 144, 230);
+  noStroke();
+  rect(0, height - alturaOcean, width, alturaOcean);
+
+  // 3. CONCEPTO 3: DISTRIBUCIÓN NORMAL (Normalidad: estructura estable y armónica del glaciar)
+  let alturaGlaciar = map(hielo, 0, 100, 10, 310);
+  
+  fill(224, 242, 254, 235);
+  beginShape();
+  vertex(40, height - alturaOcean);
+  vertex(120, height - alturaOcean - alturaGlaciar * 0.8);
+  vertex(walkX, height - alturaOcean - alturaGlaciar);
+  vertex(330, height - alturaOcean - alturaGlaciar * 0.85);
+  vertex(410, height - alturaOcean);
+  endShape(CLOSE);
+
+  // FAUNA VULNERABLE (Pingüino)
+  if (hielo > 10) {
+    let xP = walkX;
+    let yP = height - alturaOcean - alturaGlaciar - 14;
+    
+    // Cuerpo negro
+    fill(30, 41, 59);
+    ellipse(xP, yP, 20, 26);
+    
+    // Vientre blanco
+    fill(255);
+    ellipse(xP, yP + 2, 12, 18);
+    
+    // Cabeza
+    fill(30, 41, 59);
+    ellipse(xP, yP - 12, 14, 14);
+    
+    // Pico naranja
+    fill(249, 115, 22);
+    triangle(xP + 5, yP - 13, xP + 11, yP - 11, xP + 5, yP - 9);
+    
+    // Ojo
+    fill(255);
+    ellipse(xP + 3, yP - 13, 3, 3);
+    fill(0);
+    ellipse(xP + 4, yP - 13, 1.5, 1.5);
+  }
+
+  // Actualización constante de partículas
+  for (let i = particulas.length - 1; i >= 0; i--) {
+    let p = particulas[i];
+    if (p.tipo === 'excepcion') {
+      fill(250, 204, 21, p.alpha);
+      ellipse(p.x, p.y, 5, 5);
+    } else if (p.tipo === 'influencia') {
+      fill(255, 120, 120, p.alpha);
+      ellipse(p.x, p.y, 4, 4);
+    } else {
+      fill(255, p.alpha);
+      ellipse(p.x, p.y, 3, 3);
+    }
+
+    p.x += p.vx;
+    p.y += p.vy;
+    p.alpha -= 4.5;
+
+    if (p.alpha <= 0) {
+      particulas.splice(i, 1);
+    }
+  }
+
+  // Emisión por influencia directa del visitante
+  if (influenciaActiva) {
+    if (frameCount % 3 === 0) {
+      particulas.push({
+        x: mouseX + random(-8, 8),
+        y: mouseY + random(-8, 8),
+        vx: random(-0.5, 0.5),
+        vy: random(-2, -0.8),
+        tipo: 'influencia',
+        alpha: 220
+      });
+    }
+  }
+
+  // CURSOR PERSONALIZADO (Solo visible dentro del canvas)
+  if (mouseDentro) {
+    noFill();
+    stroke(255, 90, 90, 160);
+    strokeWeight(2.5);
+    ellipse(mouseX, mouseY, 35, 35);
+    fill(255, 100, 100, 45);
+    noStroke();
+    ellipse(mouseX, mouseY, 20, 20);
+  }
+
+  // PANEL DE INTERFAZ 9:16
+  fill(15, 23, 42, 210);
+  noStroke();
+  rect(width / 2 - 160, 25, 320, 42, 20);
+
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text(`Temperatura: ${temperatura.toFixed(0)}% | Hielo: ${hielo.toFixed(1)}%`, width / 2, 46);
+
+  // Texto guía inferior
+  fill(255, 190);
+  textSize(11);
+  text("Perlin, Caminata Aleatoria y Distribución Normal", width / 2, height - 25);
+}
+````
+<img width="322" height="584" alt="image" src="https://github.com/user-attachments/assets/f83ccee6-3d18-4ccd-b0b2-36178a20c699" />  
+
+Despues de esto decidí cambiar mi idea para que en vez de que el humano derritiera el hielo mejor lo salvara y que cuando se esté derritiendo los años pasen más rapido mientras que cuando intentes salvarlo va mas lento debido a que La destruccion de un ecosistema es mucho mas rapida que su recuperacion y así nació mi super código final yupiii  
+````js
+let hielo = 80;
+let temperatura = 30;
+let particulas = [];
+let tPerlin = 0;
+let walkX = 225; // Caminata aleatoria constante para la Tendencia
+let anioDecimal = 2026; // Contador de años desde el presente
+
+function setup() {
+  createCanvas(450, 800); // Formato vertical 9:16
+  noCursor();
+}
+
+function draw() {
+  // 1. CONCEPTO 1: RUIDO PERLIN (Clima base constante, continuo y autónomo)
+  tPerlin += 0.004;
+  let climaRuido = noise(tPerlin);
+
+  let mouseDentro = (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height);
+  let influenciaActiva = mouseDentro && (mouseY < height - 100 && mouseY > 50);
+
+  // Control del tiempo (Años): La destrucción del ecosistema es veloz, 
+  // pero al interactuar el tiempo va más lento (señal de que la recuperación requiere esfuerzo sostenido)
+  if (influenciaActiva) {
+    anioDecimal += 0.005; // El tiempo avanza lento durante la interacción
+    hielo += 0.002;       // Sanación muy sutil y lenta en comparación con el deterioro
+  } else {
+    anioDecimal += 0.03;  // El tiempo avanza rápido (destrucción natural acelerada)
+    hielo -= 0.012;       // El ecosistema se degrada de manera notable
+  }
+  hielo = constrain(hielo, 5, 95);
+
+  // Inercia térmica
+  let tempBase = map(climaRuido, 0, 1, 20, 70);
+  
+  if (influenciaActiva) {
+    temperatura += (40 - temperatura) * 0.04;
+  } else {
+    temperatura += (tempBase - temperatura) * 0.02;
+  }
+  temperatura = constrain(temperatura, 10, 95);
+
+  // CIELO DINÁMICO
+  let r = map(temperatura, 0, 100, 120, 225);
+  let g = map(temperatura, 0, 100, 190, 105);
+  let b = map(temperatura, 0, 100, 240, 65);
+  background(r, g, b);
+
+  // MOMENTO - POSIBILIDAD Y NORMALIDAD (Uso de randomGaussian alrededor de walkX)
+  if (random(1) < 0.3) {
+    let xNormal = walkX + randomGaussian(0, 50);
+    xNormal = constrain(xNormal, 20, width - 20);
+    particulas.push({
+      x: xNormal,
+      y: random(height * 0.4),
+      vx: random(-1.5, 1.5),
+      vy: random(-1.5, 1.5),
+      tipo: 'posibilidad',
+      alpha: random(80, 200)
+    });
+  }
+
+  // MOMENTO - EXCEPCIÓN: Evento improbable que en lugar de destruir, hace que el ecosistema se recupere un poco
+  let probabilidadRecuperacion = influenciaActiva ? 0.02 : 0.003;
+
+if (random(1) < probabilidadRecuperacion) {
+  hielo = min(95, hielo + 1);
+
+  particulas.push({
+    x: random(width),
+    y: random(height * 0.5, height * 0.75),
+    vx: random(-3, 3),
+    vy: random(-2, 2),
+    tipo: 'excepcion',
+    alpha: 255
+  });
+}
+
+  // 2. CONCEPTO 2: CAMINATA ALEATORIA (Tendencia constante y suave)
+  // 2. CONCEPTO 2: CAMINATA ALEATORIA CON TENDENCIA
+if (frameCount % 20 === 0) {
+  if (random(1) < 0.6) {
+    walkX += random(1, 4); // pequeña preferencia hacia la derecha
+  } else {
+    walkX -= random(1, 4); // movimiento contrario menos frecuente
+  }
+}
+
+walkX = constrain(walkX, 90, width - 90);
+
+  // OCÉANO
+  let alturaOcean = map(hielo, 100, 0, 180, 500);
+  fill(14, 116, 144, 230);
+  noStroke();
+  rect(0, height - alturaOcean, width, alturaOcean);
+
+  // 3. CONCEPTO 3: DISTRIBUCIÓN NORMAL (Normalidad: estructura estable y armónica del glaciar)
+  let alturaGlaciar = map(hielo, 0, 100, 10, 310);
+  
+  fill(224, 242, 254, 235);
+  beginShape();
+  vertex(40, height - alturaOcean);
+  vertex(120, height - alturaOcean - alturaGlaciar * 0.8);
+  vertex(walkX, height - alturaOcean - alturaGlaciar);
+  vertex(330, height - alturaOcean - alturaGlaciar * 0.85);
+  vertex(410, height - alturaOcean);
+  endShape(CLOSE);
+
+  // FAUNA VULNERABLE (Pingüino)
+  if (hielo > 10) {
+    let xP = walkX;
+    let yP = height - alturaOcean - alturaGlaciar - 14;
+    
+    // Cuerpo negro
+    fill(30, 41, 59);
+    ellipse(xP, yP, 20, 26);
+    
+    // Vientre blanco
+    fill(255);
+    ellipse(xP, yP + 2, 12, 18);
+    
+    // Cabeza
+    fill(30, 41, 59);
+    ellipse(xP, yP - 12, 14, 14);
+    
+    // Pico naranja
+    fill(249, 115, 22);
+    triangle(xP + 5, yP - 13, xP + 11, yP - 11, xP + 5, yP - 9);
+    
+    // Ojo
+    fill(255);
+    ellipse(xP + 3, yP - 13, 3, 3);
+    fill(0);
+    ellipse(xP + 4, yP - 13, 1.5, 1.5);
+  }
+
+  // Actualización constante de partículas
+  for (let i = particulas.length - 1; i >= 0; i--) {
+    let p = particulas[i];
+    if (p.tipo === 'excepcion') {
+      fill(250, 204, 21, p.alpha);
+      ellipse(p.x, p.y, 5, 5);
+    } else if (p.tipo === 'influencia') {
+      fill(255, 120, 120, p.alpha);
+      ellipse(p.x, p.y, 4, 4);
+    } else {
+      fill(255, p.alpha);
+      ellipse(p.x, p.y, 3, 3);
+    }
+
+    p.x += p.vx;
+    p.y += p.vy;
+    p.alpha -= 4.5;
+
+    if (p.alpha <= 0) {
+      particulas.splice(i, 1);
+    }
+  }
+
+  // Emisión por influencia directa del visitante
+  if (influenciaActiva) {
+    if (frameCount % 3 === 0) {
+      particulas.push({
+        x: mouseX + random(-8, 8),
+        y: mouseY + random(-8, 8),
+        vx: random(-0.5, 0.5),
+        vy: random(-2, -0.8),
+        tipo: 'influencia',
+        alpha: 220
+      });
+    }
+  }
+
+  // CURSOR PERSONALIZADO (Solo visible dentro del canvas)
+  if (mouseDentro) {
+    noFill();
+    stroke(255, 90, 90, 160);
+    strokeWeight(2.5);
+    ellipse(mouseX, mouseY, 35, 35);
+    fill(255, 100, 100, 45);
+    noStroke();
+    ellipse(mouseX, mouseY, 20, 20);
+  }
+
+  // PANEL DE INTERFAZ 9:16
+  fill(15, 23, 42, 210);
+  noStroke();
+  rect(width / 2 - 160, 25, 320, 42, 20);
+
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  text(`Año: ${Math.floor(anioDecimal)} | Hielo: ${hielo.toFixed(1)}%`, width / 2, 46);
+
+  // Texto guía inferior
+  fill(255, 190);
+  textSize(11);
+  text("Perlin, Caminata Aleatoria y Distribución Normal", width / 2, height - 25);
+}
+````
+**Link**  
+[prototipo](https://editor.p5js.org/Ayepes2402/sketches/QyeTzFMVk)  
+
 
 
 
