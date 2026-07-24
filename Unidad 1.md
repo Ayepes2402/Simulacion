@@ -190,6 +190,8 @@ Despues en vez de geodas traté con el crecimiento Dendrítico (Copos / Minerale
 <img width="272" height="227" alt="Captura de pantalla 2026-07-23 203036" src="https://github.com/user-attachments/assets/c6271ed8-211c-4ac9-b5cd-39024ad8938b" />  
 <img width="290" height="295" alt="Captura de pantalla 2026-07-23 203118" src="https://github.com/user-attachments/assets/7452f994-75e1-46ff-a0e8-29a086fbf56e" />  
 <img width="269" height="266" alt="Captura de pantalla 2026-07-23 203551" src="https://github.com/user-attachments/assets/f51bcaa2-f525-4f62-b0d3-bc6d122c1b44" />
+<img width="387" height="516" alt="image" src="https://github.com/user-attachments/assets/11d947c8-c332-4bc1-8268-10fd4e6bd3d7" />
+
 
 
 
