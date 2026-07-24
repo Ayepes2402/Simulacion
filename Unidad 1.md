@@ -162,6 +162,7 @@ class Walker {
 Quise usar el ruido Perlin para que el movimiento del punto no fuera siempre igual. Por eso hice que cambiara tanto la velocidad como la altura de forma suave mientras avanzaba por la pantalla. Esperaba que el recorrido se viera más natural y continuo, mostrando cómo el ruido Perlin genera cambios progresivos en lugar de movimientos bruscos.
 
 ## Actividad 7 Reto de diseño  
+<a name="ej1"></a>
 Como la contaminación y el cambio climático están afectando al planeta, especialmente a los polos, quiero crear una experiencia interactiva que muestre cómo estos ecosistemas pueden cambiar con el paso del tiempo.
 
 La idea es representar cómo el deterioro puede avanzar rápidamente, pero también cómo eventos poco probables y las acciones humanas pueden ayudar a que el ecosistema se recupere lentamente. Con esto busco generar conciencia sobre cómo nuestras decisiones actuales pueden influir en el futuro del planeta.
@@ -546,6 +547,7 @@ walkX = constrain(walkX, 90, width - 90);
 <img width="322" height="584" alt="image" src="https://github.com/user-attachments/assets/f83ccee6-3d18-4ccd-b0b2-36178a20c699" />  
 
 Despues de esto decidí cambiar mi idea para que en vez de que el humano derritiera el hielo mejor lo salvara y que cuando se esté derritiendo los años pasen más rapido mientras que cuando intentes salvarlo va mas lento debido a que La destruccion de un ecosistema es mucho mas rapida que su recuperacion y así nació mi super código final yupiii  
+<a name="ej3"></a>
 ````js
 let hielo = 80;
 let temperatura = 30;
@@ -747,7 +749,33 @@ walkX = constrain(walkX, 90, width - 90);
 }
 ````
 **Link**  
-[prototipo](https://editor.p5js.org/Ayepes2402/sketches/QyeTzFMVk)  
+<a name="ej4"></a>
+[prototipo](https://editor.p5js.org/Ayepes2402/sketches/QyeTzFMVk)   
+
+**Uso conceptos de la unidad**  
+<a name="ej2"></a>
+La experiencia utiliza diferentes conceptos de la unidad para transformar la aleatoriedad en un sistema visual con significado. Se aplican ruido Perlin, caminata aleatoria con tendencia y distribución normal para representar el comportamiento cambiante de un ecosistema polar.
+
+**Ruido Perlin:** se utiliza para controlar las variaciones del clima y la temperatura del sistema. A diferencia de un movimiento completamente aleatorio, permite generar cambios continuos y naturales que representan la evolución del ambiente con el paso del tiempo.  
+**Caminata aleatoria con tendencia:** se aplica al desplazamiento del estado del glaciar mediante walkX. Aunque el movimiento mantiene variaciones aleatorias, existe una pequeña preferencia hacia una dirección, representando cómo pequeñas alteraciones repetidas pueden generar una tendencia a largo plazo.
+**Distribución normal:** se utiliza mediante randomGaussian() para generar partículas alrededor de un punto esperado. Esto representa que la mayoría de los comportamientos del ecosistema permanecen cerca de un estado habitual, mientras que algunos casos presentan variaciones más alejadas.
+
+Además, se incorpora una excepción probabilística, donde un evento poco frecuente puede favorecer la recuperación del hielo, y la influencia del visitante modifica la probabilidad de que estos eventos ocurran. De esta manera, la incertidumbre no funciona como un comportamiento sin reglas, sino como un sistema donde diferentes formas de aleatoriedad producen diferentes posibilidades.  
+
+**Dificultades y soluciones**  
+<a name="ej5"></a>
+Mis dificultades fueron que me generara un codigo con lo que yo queria porque tal como muestro a lo largo de mi trayecto fue bastante complejo sacar algo bonito y funcional y que no se viera tan basico y mi solucion fue pelear con gemini hasta que lograra darme algo bueno asi sea que me tocara cambiar de tema un monton de veces  
+
+**Uso de IA solo en código nada en cambios de diseño o de idea**  
+
+| Criterio | Cumplo | No cumplo | Evidencia |
+| :--- | :---: | :---: | :--- |
+| **Encargo completo:** interpreto los cinco momentos dentro de un mismo sistema visual. | X | | [evidencia 1](#ej1)|
+| **Simulación con intención:** utilizo al menos tres conceptos de la unidad para comunicar las ideas del encargo. | X | | [evidencia 2]() [evidencia 3](#ej2)|
+| **Interacción significativa:** la interacción modifica el comportamiento o las probabilidades del sistema, que también funciona sin intervención. | X | |[evidencia 4](#ej3)|
+| **Prototipo funcional:** la experiencia puede ejecutarse y recorrerse completa sin errores que impidan comprenderla. | X | | [evidencia 5](#ej4)|
+| **Proceso documentado:** la bitácora evidencia avances, decisiones, dificultades, soluciones, uso de IA y enlace al prototipo. | X | | [evidencia 6](#ej5)|
+
 
 
 
