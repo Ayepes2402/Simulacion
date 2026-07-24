@@ -161,3 +161,26 @@ class Walker {
 
 Quise usar el ruido Perlin para que el movimiento del punto no fuera siempre igual. Por eso hice que cambiara tanto la velocidad como la altura de forma suave mientras avanzaba por la pantalla. Esperaba que el recorrido se viera más natural y continuo, mostrando cómo el ruido Perlin genera cambios progresivos en lugar de movimientos bruscos.
 
+## Actividad 7 Reto de diseño  
+Como la contaminación está afectando cada vez más al planeta, especialmente a los polos, me gustaría crear una experiencia interactiva que ayude a las personas a entender cómo el aumento de temperatura está causando el derretimiento de los glaciares.
+
+La idea es que los usuarios puedan observar cómo diferentes factores pueden cambiar el estado de los polos y cómo nuestras acciones tienen consecuencias en el medio ambiente. Con esta experiencia busco generar conciencia sobre la importancia de cuidar el planeta y mostrar que el futuro de estos ecosistemas depende de las decisiones que tomemos actualmente.
+
+**Posibilidad**  
+El futuro de los polos depende de muchas variables como la temperatura, la contaminación y las acciones humanas, por eso es difícil saber exactamente qué camino tomará. Cada pequeño cambio puede generar un resultado diferente, representando la incertidumbre del planeta frente al cambio climático.  
+
+**Tendencia**  
+El derretimiento del hielo es un proceso que aumenta poco a poco debido al incremento de la temperatura. Pequeños cambios repetidos durante mucho tiempo generan una dirección clara: la pérdida de hielo y la transformación del ecosistema polar.
+
+**Normalidad**  
+El equilibrio del ecosistema polar representa el estado natural donde el hielo, los animales y el clima mantienen una relación estable. Cuando las condiciones permanecen constantes, el ecosistema sigue un comportamiento conocido y predecible.  
+
+**Excepción**  
+Un cambio inesperado en el clima puede alterar completamente el comportamiento del ecosistema, creando un nuevo escenario que antes parecía imposible. Un evento poco común puede acelerar el derretimiento o generar una oportunidad de recuperación.   
+
+**Influencia**  
+La presencia del ser humano modifica directamente el futuro de los polos. Nuestras acciones pueden aumentar el daño al ecosistema o ayudar a reducirlo, demostrando que aunque el futuro sea incierto, nuestras decisiones tienen la capacidad de cambiar el resultado.
+
+
+
+
