@@ -771,10 +771,10 @@ Mis dificultades fueron que me generara un codigo con lo que yo queria porque ta
 | Criterio | Cumplo | No cumplo | Evidencia |
 | :--- | :---: | :---: | :--- |
 | **Encargo completo:** interpreto los cinco momentos dentro de un mismo sistema visual. | X | | [evidencia 1](#ej1)|
-| **Simulación con intención:** utilizo al menos tres conceptos de la unidad para comunicar las ideas del encargo. | X | | [evidencia 2]() [evidencia 3](#ej2)|
-| **Interacción significativa:** la interacción modifica el comportamiento o las probabilidades del sistema, que también funciona sin intervención. | X | |[evidencia 4](#ej3)|
-| **Prototipo funcional:** la experiencia puede ejecutarse y recorrerse completa sin errores que impidan comprenderla. | X | | [evidencia 5](#ej4)|
-| **Proceso documentado:** la bitácora evidencia avances, decisiones, dificultades, soluciones, uso de IA y enlace al prototipo. | X | | [evidencia 6](#ej5)|
+| **Simulación con intención:** utilizo al menos tres conceptos de la unidad para comunicar las ideas del encargo. | X | | [evidencia 2](#ej2)|
+| **Interacción significativa:** la interacción modifica el comportamiento o las probabilidades del sistema, que también funciona sin intervención. | X | |[evidencia 3](#ej3)|
+| **Prototipo funcional:** la experiencia puede ejecutarse y recorrerse completa sin errores que impidan comprenderla. | X | | [evidencia 4](#ej4)|
+| **Proceso documentado:** la bitácora evidencia avances, decisiones, dificultades, soluciones, uso de IA y enlace al prototipo. | X | | [evidencia 5](#ej5)|
 
 
 
