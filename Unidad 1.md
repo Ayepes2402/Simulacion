@@ -748,9 +748,440 @@ walkX = constrain(walkX, 90, width - 90);
   text("Perlin, Caminata Aleatoria y Distribución Normal", width / 2, height - 25);
 }
 ````
-**Link**  
+
+**Para hacerlo más estetico claude me ayudó a mejorar el diseño y así se ve más pro**  
+````js
+// ---------------------------------------------------------------
+// PALETA (tokens)
+// ---------------------------------------------------------------
+// Noche polar   #0B1D3A   -> cielo frío, alto hielo
+// Colapso       #C0392B   -> cielo cálido, bajo hielo
+// Hielo         #E8F6FF   -> glaciar / acentos claros
+// Océano        #0E4C5C -> #1B7A8C
+// Aurora        #7FE7C4   -> elemento distintivo, solo con hielo alto
+// Sol/luz cálida #FFD27A
+// Tinta panel   #0A1220
+
+let hielo = 80;
+let temperatura = 30;
+let particulas = [];
+let tPerlin = 0;
+let walkX = 225;
+let anioDecimal = 2026;
+
+function setup() {
+  const c = createCanvas(450, 800);
+  c.parent(document.querySelector('main'));
+  noCursor();
+  angleMode(RADIANS);
+  colorMode(RGB, 255, 255, 255, 255);
+}
+
+function draw() {
+  // -------------------------------------------------------------
+  // 1. RUIDO PERLIN — clima base continuo
+  // -------------------------------------------------------------
+  tPerlin += 0.004;
+  let climaRuido = noise(tPerlin);
+
+  let mouseDentro = (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height);
+  let influenciaActiva = mouseDentro && (mouseY < height - 100 && mouseY > 50);
+
+  if (influenciaActiva) {
+    anioDecimal += 0.005;
+    hielo += 0.002;
+  } else {
+    anioDecimal += 0.03;
+    hielo -= 0.012;
+  }
+  hielo = constrain(hielo, 5, 95);
+
+  let tempBase = map(climaRuido, 0, 1, 20, 70);
+  if (influenciaActiva) {
+    temperatura += (40 - temperatura) * 0.04;
+  } else {
+    temperatura += (tempBase - temperatura) * 0.02;
+  }
+  temperatura = constrain(temperatura, 10, 95);
+
+  // -------------------------------------------------------------
+  // CIELO — degradado multi-stop según temperatura (frío -> cálido)
+  // -------------------------------------------------------------
+  drawSky(temperatura);
+
+  // Aurora: elemento distintivo, se intensifica con más hielo (recompensa visual de sanar el ecosistema)
+  drawAurora(hielo, temperatura);
+
+  // Sol / disco de luz, se tiñe según temperatura
+  drawSunGlow(temperatura);
+
+  // -------------------------------------------------------------
+  // MOMENTO — POSIBILIDAD (randomGaussian alrededor de walkX)
+  // -------------------------------------------------------------
+  if (random(1) < 0.3) {
+    let xNormal = walkX + randomGaussian(0, 50);
+    xNormal = constrain(xNormal, 20, width - 20);
+    particulas.push({
+      x: xNormal,
+      y: random(height * 0.4),
+      vx: random(-1.5, 1.5),
+      vy: random(-1.5, 1.5),
+      tipo: 'posibilidad',
+      alpha: random(80, 200),
+      size: random(1.5, 3)
+    });
+  }
+
+  // MOMENTO — EXCEPCIÓN (recuperación improbable)
+  let probabilidadRecuperacion = influenciaActiva ? 0.02 : 0.003;
+  if (random(1) < probabilidadRecuperacion) {
+    hielo = min(95, hielo + 1);
+    particulas.push({
+      x: random(width),
+      y: random(height * 0.5, height * 0.75),
+      vx: random(-3, 3),
+      vy: random(-2, 2),
+      tipo: 'excepcion',
+      alpha: 255,
+      size: 6
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 2. CAMINATA ALEATORIA CON TENDENCIA
+  // -------------------------------------------------------------
+  if (frameCount % 20 === 0) {
+    if (random(1) < 0.6) {
+      walkX += random(1, 4);
+    } else {
+      walkX -= random(1, 4);
+    }
+  }
+  walkX = constrain(walkX, 90, width - 90);
+
+  // -------------------------------------------------------------
+  // OCÉANO — con leve oleaje y reflejo del glaciar
+  // -------------------------------------------------------------
+  let alturaOcean = map(hielo, 100, 0, 180, 500);
+  drawOcean(alturaOcean);
+
+  // -------------------------------------------------------------
+  // 3. GLACIAR — distribución normal / silueta orgánica con sombreado
+  // -------------------------------------------------------------
+  let alturaGlaciar = map(hielo, 0, 100, 10, 310);
+  drawGlacier(alturaOcean, alturaGlaciar, walkX);
+
+  // -------------------------------------------------------------
+  // FAUNA VULNERABLE — pingüino con sombra suave
+  // -------------------------------------------------------------
+  if (hielo > 10) {
+    drawPenguin(walkX, height - alturaOcean - alturaGlaciar - 14);
+  }
+
+  // -------------------------------------------------------------
+  // PARTÍCULAS
+  // -------------------------------------------------------------
+  updateAndDrawParticles();
+
+  if (influenciaActiva) {
+    if (frameCount % 3 === 0) {
+      particulas.push({
+        x: mouseX + random(-8, 8),
+        y: mouseY + random(-8, 8),
+        vx: random(-0.5, 0.5),
+        vy: random(-2, -0.8),
+        tipo: 'influencia',
+        alpha: 220,
+        size: 4
+      });
+    }
+  }
+
+  // Viñeta sutil para dar profundidad
+  drawVignette();
+
+  // Cursor personalizado
+  if (mouseDentro) {
+    drawCursor();
+  }
+
+  // -------------------------------------------------------------
+  // PANEL DE INTERFAZ
+  // -------------------------------------------------------------
+  drawHUD(influenciaActiva);
+}
+
+// ===================================================================
+// FUNCIONES DE DIBUJO
+// ===================================================================
+
+function drawSky(temp) {
+  let coldTop    = color(8, 20, 48);
+  let coldBottom = color(58, 90, 130);
+  let warmTop    = color(140, 60, 46);
+  let warmBottom = color(232, 152, 82);
+
+  let topColor    = lerpColor(coldTop, warmTop, map(temp, 10, 95, 0, 1));
+  let bottomColor = lerpColor(coldBottom, warmBottom, map(temp, 10, 95, 0, 1));
+
+  noStroke();
+  let skyH = height - 60;
+  for (let y = 0; y < skyH; y++) {
+    let t = y / skyH;
+    let c = lerpColor(topColor, bottomColor, t);
+    stroke(c);
+    line(0, y, width, y);
+  }
+  noStroke();
+}
+
+function drawAurora(hielo, temp) {
+  // Solo visible cuando el frío predomina — recompensa visual de un ecosistema sano
+  let intensidad = map(hielo, 40, 95, 0, 1, true) * map(temp, 10, 60, 1, 0, true);
+  if (intensidad <= 0.02) return;
+
+  push();
+  blendMode(ADD);
+  noFill();
+  let bandas = [
+    color(127, 231, 196),
+    color(120, 200, 255),
+    color(180, 255, 220)
+  ];
+  for (let b = 0; b < 3; b++) {
+    stroke(red(bandas[b]), green(bandas[b]), blue(bandas[b]), 55 * intensidad);
+    strokeWeight(10);
+    beginShape();
+    for (let x = -20; x <= width + 20; x += 20) {
+      let y = 90 + b * 26
+        + sin(x * 0.012 + frameCount * 0.01 + b * 2) * 22
+        + sin(x * 0.03 + frameCount * 0.02) * 8;
+      curveVertex(x, y);
+    }
+    endShape();
+  }
+  blendMode(BLEND);
+  pop();
+}
+
+function drawSunGlow(temp) {
+  let sx = width - 80;
+  let sy = 90;
+  let warmth = map(temp, 10, 95, 0, 1);
+  let sunColor = lerpColor(color(226, 236, 250), color(255, 205, 120), warmth);
+
+  push();
+  noStroke();
+  for (let r = 90; r > 0; r -= 6) {
+    let a = map(r, 0, 90, 0, 26);
+    fill(red(sunColor), green(sunColor), blue(sunColor), a);
+    ellipse(sx, sy, r, r);
+  }
+  fill(255, 250, 240, 230);
+  ellipse(sx, sy, 34, 34);
+  pop();
+}
+
+function drawOcean(alturaOcean) {
+  push();
+  let oceanTop = color(18, 90, 110, 235);
+  let oceanBottom = color(6, 40, 55, 245);
+  noStroke();
+  let baseY = height - alturaOcean;
+  for (let y = 0; y < alturaOcean; y += 4) {
+    let t = y / alturaOcean;
+    let c = lerpColor(oceanTop, oceanBottom, t);
+    fill(c);
+    rect(0, baseY + y, width, 4);
+  }
+
+  // Cresta de oleaje sutil en la superficie
+  stroke(226, 246, 255, 90);
+  strokeWeight(1.4);
+  noFill();
+  beginShape();
+  for (let x = 0; x <= width; x += 10) {
+    let y = baseY + sin(x * 0.05 + frameCount * 0.04) * 2.5;
+    vertex(x, y);
+  }
+  endShape();
+  pop();
+}
+
+function drawGlacier(alturaOcean, alturaGlaciar, walkX) {
+  let baseY = height - alturaOcean;
+
+  push();
+  // Sombra proyectada en el agua (reflejo tenue)
+  noStroke();
+  fill(220, 240, 255, 35);
+  beginShape();
+  vertex(40, baseY);
+  vertex(120, baseY + alturaGlaciar * 0.18);
+  vertex(walkX, baseY + alturaGlaciar * 0.26);
+  vertex(330, baseY + alturaGlaciar * 0.2);
+  vertex(410, baseY);
+  endShape(CLOSE);
+  pop();
+
+  // --- Contorno principal del glaciar (silueta real, suavizada con curvas) ---
+  push();
+  fill(235, 246, 255, 245);
+  stroke(255, 255, 255, 120);
+  strokeWeight(1);
+  beginShape();
+  curveVertex(30, baseY);
+  curveVertex(40, baseY);
+  curveVertex(120, baseY - alturaGlaciar * 0.8);
+  curveVertex(walkX, baseY - alturaGlaciar);
+  curveVertex(330, baseY - alturaGlaciar * 0.85);
+  curveVertex(410, baseY);
+  curveVertex(420, baseY);
+  endShape(CLOSE);
+
+  // Grietas / textura sutil de hielo
+  stroke(150, 190, 220, 90);
+  strokeWeight(1);
+  line(walkX - 40, baseY - alturaGlaciar * 0.5, walkX - 15, baseY - alturaGlaciar * 0.75);
+  line(walkX + 30, baseY - alturaGlaciar * 0.4, walkX + 55, baseY - alturaGlaciar * 0.65);
+
+  // Highlight de luz en la cresta
+  noFill();
+  stroke(255, 255, 255, 160);
+  strokeWeight(2);
+  beginShape();
+  curveVertex(120, baseY - alturaGlaciar * 0.8);
+  curveVertex(walkX, baseY - alturaGlaciar);
+  curveVertex(330, baseY - alturaGlaciar * 0.85);
+  endShape();
+  pop();
+}
+
+function drawPenguin(xP, yP) {
+  push();
+  // sombra suave sobre el hielo
+  noStroke();
+  fill(20, 40, 60, 60);
+  ellipse(xP, yP + 15, 26, 8);
+
+  // Cuerpo negro
+  fill(24, 34, 48);
+  ellipse(xP, yP, 20, 26);
+
+  // Vientre blanco
+  fill(250, 250, 252);
+  ellipse(xP, yP + 2, 12, 18);
+
+  // Cabeza
+  fill(24, 34, 48);
+  ellipse(xP, yP - 12, 14, 14);
+
+  // Pico naranja
+  fill(247, 140, 60);
+  triangle(xP + 5, yP - 13, xP + 11, yP - 11, xP + 5, yP - 9);
+
+  // Ojo
+  fill(255);
+  ellipse(xP + 3, yP - 13, 3, 3);
+  fill(10);
+  ellipse(xP + 4, yP - 13, 1.5, 1.5);
+  pop();
+}
+
+function updateAndDrawParticles() {
+  for (let i = particulas.length - 1; i >= 0; i--) {
+    let p = particulas[i];
+    noStroke();
+    if (p.tipo === 'excepcion') {
+      fill(250, 204, 21, p.alpha);
+      ellipse(p.x, p.y, p.size + 2, p.size + 2);
+      fill(255, 240, 200, p.alpha * 0.5);
+      ellipse(p.x, p.y, p.size + 8, p.size + 8);
+    } else if (p.tipo === 'influencia') {
+      fill(255, 130, 130, p.alpha);
+      ellipse(p.x, p.y, p.size, p.size);
+    } else {
+      fill(255, 255, 255, p.alpha);
+      ellipse(p.x, p.y, p.size, p.size);
+    }
+
+    p.x += p.vx;
+    p.y += p.vy;
+    p.alpha -= 4.5;
+
+    if (p.alpha <= 0) {
+      particulas.splice(i, 1);
+    }
+  }
+}
+
+function drawVignette() {
+  push();
+  noFill();
+  for (let i = 0; i < 60; i++) {
+    let a = map(i, 0, 60, 0, 70);
+    stroke(4, 8, 16, a * 0.06);
+    strokeWeight(i);
+    rect(0, 0, width, height);
+  }
+  pop();
+}
+
+function drawCursor() {
+  push();
+  noFill();
+  stroke(255, 110, 110, 170);
+  strokeWeight(2);
+  ellipse(mouseX, mouseY, 35, 35);
+  fill(255, 110, 110, 40);
+  noStroke();
+  ellipse(mouseX, mouseY, 18, 18);
+  pop();
+}
+
+function drawHUD(influenciaActiva) {
+  push();
+  // Panel translúcido tipo "vidrio"
+  let panelW = 340;
+  let panelH = 54;
+  let px = width / 2 - panelW / 2;
+  let py = 24;
+
+  noStroke();
+  fill(6, 12, 22, 190);
+  rect(px, py, panelW, panelH, 16);
+  stroke(255, 255, 255, 30);
+  strokeWeight(1);
+  noFill();
+  rect(px, py, panelW, panelH, 16);
+
+  noStroke();
+  textAlign(CENTER, CENTER);
+
+  textFont('JetBrains Mono');
+  fill(230, 240, 250);
+  textSize(15);
+  text(`${floor(anioDecimal)}`, width / 2, py + 20);
+
+  textSize(10.5);
+  let estado = influenciaActiva ? 'SANANDO' : 'EN DECLIVE';
+  fill(hielo > 40 ? color(140, 220, 200) : color(240, 150, 120));
+  text(`HIELO ${hielo.toFixed(1)}%  ·  ${estado}`, width / 2, py + 38);
+
+  // Texto guía inferior
+  textFont('Space Grotesk');
+  fill(220, 230, 240, 170);
+  textSize(11);
+  text("Ruido Perlin · Caminata aleatoria · Distribución normal", width / 2, height - 24);
+  pop();
+}
+````
+<img width="337" height="557" alt="image" src="https://github.com/user-attachments/assets/0d8188d7-2a45-4443-9ee9-6d87837c2173" />
+
+**Links**  
 <a name="ej4"></a>
-[prototipo](https://editor.p5js.org/Ayepes2402/sketches/QyeTzFMVk)   
+[prototipo sin mejora de diseño](https://editor.p5js.org/Ayepes2402/sketches/QyeTzFMVk)   
+[prototipo con mejora de diseño](https://editor.p5js.org/Ayepes2402/sketches/QURmtWrVO).
 
 **Uso conceptos de la unidad**  
 <a name="ej2"></a>
