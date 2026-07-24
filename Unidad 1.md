@@ -196,6 +196,23 @@ Despues en vez de geodas traté con el crecimiento Dendrítico (Copos / Minerale
 Luego intenté con el cerebro pero tampoco funcionó y no me gustó, se podría decir que se veia bien pero ya de ahí no mucho más  
 <img width="286" height="437" alt="Captura de pantalla 2026-07-23 204213" src="https://github.com/user-attachments/assets/46c08320-1143-4692-b906-54498d7bba5d" />  
 
+**Experimentos y versiones intermedias**  
+Las primeras versiones de código tenian medianamente la idea pero se veian bastante mal visualmente y tenian cosas que sobraban y otras que funcionaban, por ejemplo al inicio la idea era que la persona fuera la que derritiera más rapido el iceberg y que dejar el mouse fuera lo hiciera recuperar, eso funcionaba pero a que costo? a que se viera horrible  
+
+<img width="331" height="554" alt="Captura de pantalla 2026-07-23 220342" src="https://github.com/user-attachments/assets/ae30190d-d9ff-472a-8c80-d5f77004e9e9" />  
+
+Despues de eso seguí peleando con la ia como buena guerrera que soy y me fue peor, ya no tenia lo del calentamiento y solo era un iceberg moviendose sin mas  
+
+<img width="331" height="526" alt="Captura de pantalla 2026-07-23 213626" src="https://github.com/user-attachments/assets/3f921760-0e18-425d-a15b-7ce9b6af32f8" />  
+
+Despues perdió hasta la forma y no parecía nada  
+<img width="293" height="330" alt="Captura de pantalla 2026-07-23 213718" src="https://github.com/user-attachments/assets/99e66c58-83fd-44fc-8c17-6a6732706615" />  
+<img width="296" height="311" alt="Captura de pantalla 2026-07-23 214019" src="https://github.com/user-attachments/assets/10898903-8f26-4338-ad6e-3108f96883f6" />  
+<img width="320" height="374" alt="Captura de pantalla 2026-07-23 213807" src="https://github.com/user-attachments/assets/67be393a-9d1d-4d0c-b0f8-3077e68c0d2e" />
+
+
+
+
 
 
 
