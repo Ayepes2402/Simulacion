@@ -344,7 +344,7 @@ function draw() {
   }
 }
 ````
-En este al menos ya estaba el iceberg, el agua y un animal y ya al menos tenia forma chahaha  
+En este al menos ya estaba el iceberg, el agua y un animal y ya al menos tenia forma chajaja  
 <img width="589" height="357" alt="Captura de pantalla 2026-07-23 220739" src="https://github.com/user-attachments/assets/1610b7b2-f4ce-408f-9225-b765adb9513e" />  
 
 Despues lo intente cambiar para que tuviera al menos tres conceptos de la unidad añadiendo probabilidades en el iceberg, copos de nieve, al derretir hielo y al salvarlo  
