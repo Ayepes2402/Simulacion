@@ -219,3 +219,16 @@ Al inicio quería hacerlo de las personas valientes y las personas asustadizas a
 
 <img width="1106" height="1087" alt="image" src="https://github.com/user-attachments/assets/f8a7f7b1-f703-414e-bdb5-602c584a4fc3" />
 
+# Autoevluación  
+
+| **Criterio**                                                                      | **Peso** |    **Valoración**    | **Aporte / Justificación**                                                                                                                                                                                         |
+| --------------------------------------------------------------------------------- | :------: | :------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| La intención es clara y perceptible en el comportamiento.                         |    20%   |       **19/20**      | El comportamiento de las partículas comunica claramente la intención del sistema. En algunos momentos las interacciones pueden verse muy dinámicas, pero la idea general siempre se mantiene.                      |
+| Los tipos, cantidades, matriz y parámetros están justificados desde la intención. |    25%   |       **24/25**      | La elección de los tipos de partículas, sus cantidades y las relaciones entre ellas responde a la intención conceptual. Los parámetros fueron ajustados mediante pruebas para obtener un comportamiento coherente. |
+| Comprendo y puedo modificar el funcionamiento técnico del sistema.                |    20%   |       **19/20**      | Comprendo cómo afectan la matriz, las fuerzas, las distancias y la cantidad de partículas. Puedo modificar estos parámetros para cambiar el comportamiento del sistema sin alterar su lógica principal.            |
+| El sistema produce variaciones con una identidad reconocible.                     |    15%   |       **15/15**      | Cada ejecución genera resultados diferentes gracias a la aleatoriedad inicial, pero mantiene una identidad visual y de comportamiento consistente.                                                                 |
+| Experimenté, comparé, seleccioné y descarté con criterios claros.                 |    10%   |       **10/10**      | Realicé varias pruebas ajustando cantidades, intensidades y alcances, comparando los resultados hasta encontrar la configuración más adecuada para la intención del proyecto.                                      |
+| Puedo distinguir y sustentar lo diseñado y lo emergente.                          |    10%   |       **9/10**       | Puedo identificar qué aspectos fueron definidos desde las reglas del sistema y cuáles aparecen como comportamientos emergentes producto de la interacción entre las partículas.                                    |
+| **Total**                                                                         | **100%** | **96/100 (4.8/5.0)** | El sistema cumple con la intención planteada, mantiene coherencia entre sus reglas y el comportamiento observado, y genera variaciones que conservan una identidad reconocible.                                    |
+
+
