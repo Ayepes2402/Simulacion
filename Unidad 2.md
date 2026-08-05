@@ -231,4 +231,6 @@ Al inicio quería hacerlo de las personas valientes y las personas asustadizas a
 | Puedo distinguir y sustentar lo diseñado y lo emergente.                          |    10%   |       **9/10**       | Puedo identificar qué aspectos fueron definidos desde las reglas del sistema y cuáles aparecen como comportamientos emergentes producto de la interacción entre las partículas.                                    |
 | **Total**                                                                         | **100%** | **96/100 (4.8/5.0)** | El sistema cumple con la intención planteada, mantiene coherencia entre sus reglas y el comportamiento observado, y genera variaciones que conservan una identidad reconocible.                                    |
 
+**Nota:** 4.8
+
 
