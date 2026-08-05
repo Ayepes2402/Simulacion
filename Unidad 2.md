@@ -219,6 +219,9 @@ Al inicio quería hacerlo de las personas valientes y las personas asustadizas a
 
 <img width="1106" height="1087" alt="image" src="https://github.com/user-attachments/assets/f8a7f7b1-f703-414e-bdb5-602c584a4fc3" />
 
+#Link  
+[Prototipo](https://editor.p5js.org/Ayepes2402/sketches/znMV2QxwN)
+
 # Autoevluación  
 
 | **Criterio**                                                                      | **Peso** |    **Valoración**    | **Aporte / Justificación**                                                                                                                                                                                         |
