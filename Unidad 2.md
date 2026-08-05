@@ -1,5 +1,5 @@
 # Actividad 5  
-**Intención**  
+## Intención    
 
 Para este reto quise explorar la tensión entre la creatividad individual y la presión del sistema por mantener el orden. Mi idea surgió al pensar que muchas veces las personas creativas tienen ideas diferentes, pero la sociedad, las instituciones o incluso las normas establecidas hacen que esas ideas sean rechazadas o limitadas porque no encajan con lo que se considera "normal". Quise representar esa contradicción mediante un sistema de partículas donde la creatividad siempre intenta abrirse camino, pero constantemente encuentra obstáculos que la obligan a cambiar de dirección. Mi intención no es mostrar que un lado sea completamente bueno o malo, sino **hacer visible cómo existe una tensión constante entre crear algo nuevo y adaptarse a las reglas del entorno.**  
 
@@ -68,4 +68,154 @@ Esa diferencia en las reglas hace que la contradicción se vea en el movimiento 
 
 Las fuerzas de atracción y repulsión tienen distintas intensidades según el tipo de partícula. La relación más fuerte es la repulsión del margen hacia las partículas creativas, mientras que la atracción de las creativas hacia el núcleo es moderada.
 
-Seleccioné estas intensidades porque quiero que el conflicto sea evidente sin impedir completamente el movimiento de las partículas. Espero que produzca trayectorias cambiantes y situaciones donde algunas logren acercarse al núcleo mientras otras son expulsadas.
+Seleccioné estas intensidades porque quiero que el conflicto sea evidente sin impedir completamente el movimiento de las partículas. Espero que produzca trayectorias cambiantes y situaciones donde algunas logren acercarse al núcleo mientras otras son expulsadas.  
+
+## Distancias de interacción
+
+Las partículas interactúan dentro de un radio aproximado de 140 píxeles.
+
+Seleccioné esta distancia porque quiero que las relaciones ocurran únicamente cuando las partículas están relativamente cerca unas de otras. Espero que produzca agrupaciones, bloqueos y reorganizaciones constantes.
+
+## Fricción y velocidad máxima
+
+La fricción del sistema es 0.88, lo que permite movimientos fluidos sin que las partículas pierdan completamente su impulso.
+
+Las velocidades máximas son diferentes para cada tipo:
+
+Creativas: 8
+Núcleo social: 2
+Margen: 4.5
+
+Seleccioné estos valores porque quiero que las partículas creativas transmitan dinamismo y búsqueda constante, mientras que el núcleo permanezca estable y el margen pueda reaccionar rápidamente para contenerlas. Espero que produzca una diferencia clara entre los comportamientos de cada población.  
+
+## Distribución inicial
+
+Las partículas creativas aparecen distribuidas aleatoriamente por todo el espacio.
+
+Las partículas del núcleo social nacen agrupadas en el centro.
+
+Las partículas del margen forman un anillo alrededor del núcleo.
+
+Seleccioné esta distribución porque quiero que desde el inicio pueda reconocerse la estructura del sistema. Espero que produzca la sensación de que las ideas creativas intentan atravesar una barrera para llegar al centro.  
+
+## Parámetros constantes y variables
+
+Constantes
+
+Matriz de relaciones.
+Radio de interacción.
+Fricción.
+Velocidad máxima de cada tipo.
+Distribución inicial de cada población.
+
+Estos parámetros mantienen la identidad del sistema en todas las ejecuciones.
+
+Variables
+
+Posición inicial exacta de cada partícula.
+Dirección inicial.
+Velocidad inicial.
+Cantidad de partículas mediante el panel de control.
+
+Estos parámetros hacen que cada simulación sea diferente sin perder el concepto principal.
+
+## Apariencia e interacción
+
+Las partículas creativas cambian continuamente de color y dejan una estela a su paso para representar que las ideas pueden dejar una huella incluso cuando son rechazadas.
+
+Las partículas del núcleo social son más grandes y de color rojo para transmitir estabilidad y permanencia.
+
+Las partículas del margen son amarillas y rodean el núcleo como una barrera de contención.
+
+Además, el usuario puede modificar la cantidad de partículas de cada población mediante controles deslizantes. Esto permite observar cómo cambia el equilibrio del sistema cuando aumenta o disminuye la creatividad, el poder institucional o la presión social.
+
+# Ficha breve  
+
+## Tensión e intención
+
+**Tensión:** Creatividad individual vs. presión del sistema.
+
+**Intención:** Representar cómo las personas creativas intentan aportar ideas y acercarse al centro de la sociedad, pero encuentran barreras impuestas por las normas y la presión social que limitan o reprimen esa creatividad.
+
+
+
+## Tipos y cantidades
+
+| Tipo de partícula | Cantidad | Representa                                         |
+| ----------------- | :------: | -------------------------------------------------- |
+| Creativas         |    100   | Personas con ideas nuevas e innovadoras.           |
+| Núcleo social     |    60    | Instituciones, normas y statu quo.                 |
+| Margen            |    90    | Presión social y mecanismos que protegen el orden. |
+
+
+
+## Reglas
+
+* Las partículas creativas se mueven rápidamente y buscan acercarse al núcleo.
+* El núcleo permanece unido y estable en el centro.
+* El margen forma una barrera alrededor del núcleo.
+* Cuando las creativas intentan atravesar esa barrera, el margen las rechaza y las obliga a cambiar de dirección.
+* Cada ejecución es diferente debido a la aleatoriedad de las posiciones y velocidades iniciales.
+
+
+
+## Matriz de relaciones
+
+| **Influye sobre →** | Creativas |  Núcleo |  Margen  |
+| ------------------- | :-------: | :-----: | :------: |
+| **Creativas**       |  **-0.4** | **0.3** |  **0.1** |
+| **Núcleo**          |  **-0.1** | **0.4** |  **0.6** |
+| **Margen**          |  **-1.0** | **0.7** | **-0.2** |
+
+
+
+## Parámetros y justificación
+
+* **Radio de interacción:** 140 px, para que las relaciones ocurran cuando las partículas están relativamente cerca.
+* **Fricción:** 0.88, para obtener movimientos fluidos.
+* **Velocidad máxima:**
+
+  * Creativas: **8**
+  * Núcleo: **2**
+  * Margen: **4.5**
+* **Distribución inicial:**
+
+  * Creativas distribuidas aleatoriamente.
+  * Núcleo concentrado en el centro.
+  * Margen formando un anillo alrededor del núcleo.
+
+**Justificación:** Estos parámetros permiten que el conflicto surja de las reglas del sistema. Las creativas son rápidas y buscan integrarse, el núcleo permanece estable y el margen actúa como una barrera que protege el orden establecido.
+
+
+
+## Invariantes y variables
+
+### Invariantes
+
+* Existen siempre tres tipos de partículas.
+* Se mantiene la misma matriz de relaciones.
+* El núcleo permanece en el centro.
+* El margen rodea y protege al núcleo.
+
+### Variables
+
+* Posición inicial de cada partícula.
+* Dirección y velocidad inicial.
+* Cantidad de partículas mediante el panel de control.
+
+Estas variables hacen que cada simulación sea diferente, pero la tensión entre creatividad y presión social siempre sea reconocible.
+
+## Pruebas  
+<img width="1173" height="860" alt="Captura de pantalla 2026-08-04 193902" src="https://github.com/user-attachments/assets/67317739-c9c9-4de2-b8c3-18760feec231" />
+<img width="1244" height="883" alt="Captura de pantalla 2026-08-04 193554" src="https://github.com/user-attachments/assets/5068b441-f0ba-4b06-b4a0-81d1bce90039" />
+<img width="1256" height="1039" alt="Captura de pantalla 2026-08-04 191831" src="https://github.com/user-attachments/assets/4dd3985c-9435-4082-b740-8aa7d6d97eb3" />
+<img width="1255" height="1125" alt="Captura de pantalla 2026-08-04 191638" src="https://github.com/user-attachments/assets/4cf610f9-cdd8-4a40-8337-d2fdff427b56" />
+<img width="1241" height="1392" alt="Captura de pantalla 2026-08-04 191252" src="https://github.com/user-attachments/assets/e4c9b190-d244-4342-94e2-cdeca39c83fd" />
+<img width="1230" height="1142" alt="Captura de pantalla 2026-08-04 211707" src="https://github.com/user-attachments/assets/d6c85773-a3cd-4d7a-8fe8-7005ae43df08" />
+<img width="2545" height="1455" alt="Captura de pantalla 2026-08-04 210814" src="https://github.com/user-attachments/assets/0f736cb0-dd0b-4b7c-8e9c-ab393dadbb24" />
+<img width="1117" height="1088" alt="Captura de pantalla 2026-08-04 221642" src="https://github.com/user-attachments/assets/89471839-d247-471c-a649-f36ee8f46dda" />
+
+Al inicio quería hacerlo de las personas valientes y las personas asustadizas a situaciones nuevas pero alió tan mal y aburrido que lo cambié a mi tema actual y descubrí que al poner muchas partículas se me buguea todo
+
+<img width="1106" height="1087" alt="image" src="https://github.com/user-attachments/assets/f8a7f7b1-f703-414e-bdb5-602c584a4fc3" />
+
