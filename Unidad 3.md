@@ -11,19 +11,23 @@
 | **2. Oscilador de Voz** | `V` | `createSimulation.js` | Modifica dinámicamente el objetivo local usando funciones trigonométricas y radiales para crear expansión y contracción. | ```javascript<br>If(params.voiceOscillator.greaterThan(0.001), () => {<br>  const len = localTarget.length();<br>  // ... cálculo de ondas y bulge<br>  localTarget.addAssign(dir.mul(bulge.mul(params.voiceOscillator)));<br>});<br>``` |
 | **3. Onda por Columnas** | `M` | `createSimulation.js` | Desplaza las partículas con patrones sinusoidales y cosenoidales independientes basados en el índice de cada columna. | ```javascript<br>If(params.columnWaveEnabled.greaterThan(0.5), () => {<br>  // ... cálculo de swayX y bobY<br>  localTarget.addAssign(vec3(swayX, bobY, 0.0));<br>});<br>``` |
 | **4. Impulso de Ritmo (Beat)** | `B` | `createSimulation.js` | Fuerza explosiva de tipo radial y direccional aleatoria que altera bruscamente la velocidad al disparar un beat. | ```javascript<br>const beatImpulse = Fn(() => {<br>  const dir = p.normalize();<br>  v.assign(dir.mul(params.beatForce.mul(2.5)).add(randDir.mul(params.beatForce.mul(1.2))));<br>}).compute(count);<br>``` |
-| **5. Deriva Global (Viento)** | `F` (Auto-Flujo) o `W` (Preset Viento) | `main.js` y `createSimulation.js` | Desplaza el espacio sumando un vector acumulado en el tiempo al offset global de las posiciones base. | ```javascript<br>// main.js<br>params.globalOffset.value.x += params.driftX.value * delta * 0.35;<br>// createSimulation.js<br>const shiftedHome = localTarget.add(params.globalOffset);<br>``` |
-| **6. Amortiguación y Velocidad Máxima** | *N/A (Parámetro base)* | `createSimulation.js` | Fuerzas de fricción pasivas que estabilizan la simulación y evitan velocidades infinitas. | ```javascript<br>v.assign(v.mul(params.damping));<br>If(speed.greaterThan(params.maxSpeed), () => {<br>  v.assign(v.normalize().mul(params.maxSpeed));<br>});<br>``` |
+| **5. Deriva Global & Auto-Flujo** | `F` | `main.js` y `createSimulation.js` | Desplaza el espacio sumando un vector acumulado en el tiempo al offset global de las posiciones base. | ```javascript<br>// main.js<br>params.globalOffset.value.x += params.driftX.value * delta * 0.35;<br>// createSimulation.js<br>const shiftedHome = localTarget.add(params.globalOffset);<br>``` |
+| **6. Amortiguación y Velocidad Máxima** | *Base / Dinámico* | `createSimulation.js` | Fuerzas de fricción pasivas que estabilizan la simulación o se relajan mediante presets para permitir ingravidez. | ```javascript<br>v.assign(v.mul(params.damping));<br>If(speed.greaterThan(params.maxSpeed), () => {<br>  v.assign(v.normalize().mul(params.maxSpeed));<br>});<br>``` |
+| **7. Inestabilidad y Tensión (Preset)** | `I` | `main.js` | Reduce drásticamente el resorte de retorno, casi elimina la fricción y aplica derivas aleatorias para generar caos tipo Particle Life. | ```javascript<br>params.returnSpeed.value = 1.0;<br>params.damping.value = 0.995;<br>params.maxSpeed.value = 12.0;<br>``` |
+| **8. Torbellino Explosivo (Warp)** | `W` | `main.js` | Desata un torbellino 3D combinando un beat inicial, auto-flujo acelerado, rotación de cámara en 3 ejes con giroscopio y brillo alto. | ```javascript<br>simulation.triggerBeat();<br>autoFlow = true;<br>params.flowSpeed.value = 15.0;<br>gyro.enabled = true;<br>gyro.speedY = 1.2;<br>``` |
 
 
 ## Ecuación
-| Fuerza / Modulación | Ecuación| Archivo de Origen |
+| Fuerza / Modulación | Ecuación / Parámetros | Archivo de Origen |
 | :--- | :--- | :--- |
-| **1. Fuerza de Retorno (Resorte)** | $\vec{F}_{return} = (\vec{targetHome} - \vec{p}) \times \text{returnSpeed}$ (con corrección de límites periódicos del espacio)[cite: 1] | `createSimulation.js`[cite: 1] |
-| **2. Oscilador de Voz** | $\vec{target} += \hat{dir} \times \left( \frac{\sin(8t + x_d) + \cos(6t + y_d) + \sin(10t + z_d)}{3} \times \text{voiceIntensity} \times \text{voiceOscillator} \right)$[cite: 1] | `createSimulation.js`[cite: 1] |
-| **3. Onda por Columnas** | $\text{swayX} = \sin(\text{time} \cdot \text{freq} + \text{phase}) \cdot \text{amplitude}$ (con desplazamiento auxiliar en Y)[cite: 1] | `createSimulation.js`[cite: 1] |
-| **4. Impulso de Ritmo (Beat)** | $\vec{v} = \hat{p} \cdot (\text{beatForce} \cdot 2.5) + \vec{randDir} \cdot (\text{beatForce} \cdot 1.2)$[cite: 1] | `createSimulation.js`[cite: 1] |
-| **5. Deriva Global (Viento)** | $\vec{globalOffset} += \vec{drift} \cdot \Delta t \cdot 0.35$ (acumulado en bucle principal y aplicado como traslación espacial)[cite: 1, 3] | `main.js` y `createSimulation.js`[cite: 1, 3] |
-| **6. Amortiguación y Límite** | $\vec{v} = \vec{v} \cdot \text{damping}$; si $|\vec{v}| > \text{maxSpeed}$, $\vec{v} = \hat{v} \cdot \text{maxSpeed}$[cite: 1] | `createSimulation.js`[cite: 1] |
+| **1. Fuerza de Retorno (Resorte)** | $\vec{F}_{return} = (\vec{targetHome} - \vec{p}) \times \text{returnSpeed}$ (con corrección de límites espaciales) | `createSimulation.js` |
+| **2. Oscilador de Voz** | $\vec{target} += \hat{dir} \times \left( \frac{\sin(8t + x_d) + \cos(6t + y_d) + \sin(10t + z_d)}{3} \times \text{voiceIntensity} \times \text{voiceOscillator} \right)$ | `createSimulation.js` |
+| **3. Onda por Columnas** | $\text{swayX} = \sin(\text{time} \cdot \text{freq} + \text{phase}) \cdot \text{amplitude}$ (con desplazamiento auxiliar en Y) | `createSimulation.js` |
+| **4. Impulso de Ritmo (Beat)** | $\vec{v} = \hat{p} \cdot (\text{beatForce} \cdot 2.5) + \vec{randDir} \cdot (\text{beatForce} \cdot 1.2)$ | `createSimulation.js` |
+| **5. Deriva Global (Viento / Auto-Flujo)** | $\vec{globalOffset} += \vec{drift} \cdot \Delta t \cdot 0.35$ (acumulado en bucle principal y aplicado como traslación espacial) | `main.js` y `createSimulation.js` |
+| **6. Amortiguación y Límite** | $\vec{v} = \vec{v} \cdot \text{damping}$; si $|\vec{v}| > \text{maxSpeed}$, $\vec{v} = \hat{v} \cdot \text{maxSpeed}$ | `createSimulation.js` |
+| **7. Inestabilidad y Tensión (Preset I)** | $\text{returnSpeed} = 1.0, \ \text{damping} = 0.995, \ \text{maxSpeed} = 12.0, \ \vec{drift} = (\text{rand} - 0.5) \cdot 15$ | `main.js` |
+| **8. Torbellino Explosivo (Preset W)** | $\text{flowSpeed} = 15.0, \ \vec{drift} = \langle \cos(0.31t)s, \sin(0.47t)s, \dots \rangle, \ \text{gyro.speedY} = 1.2$ | `main.js` |
 
 ## Diseño
 La verdad es que mientras escuchaba la canción me fui imaginando diferentes formas tipo moviendose y algunnas que parecieran medio palpitando y así, ya en el proceso fui agregando la intencidad el autoflujo y demás
@@ -1099,7 +1103,18 @@ export function createParameters() {
 <img width="1739" height="1208" alt="image" src="https://github.com/user-attachments/assets/e3e4b75b-ab40-44d2-bd70-9e24107b32cc" />
 <img width="1764" height="1022" alt="image" src="https://github.com/user-attachments/assets/f7e1567c-d3c0-42e9-b7ff-acc9a646405a" />
 
+| **Criterio**                                  | **Peso** | **Qué debe demostrar la evidencia**                                                                                                                                                                                                                                                                | **Valoración** |
+| --------------------------------------------- | -------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------: |
+| **Trazabilidad y comprensión del sistema**    |       25 | Puedo señalar y explicar estado, fuerzas, integración, render y controles; además puedo ubicar qué partes produjo o modificó la IA.                                                                                                                                                                |         **16** |
+| **Verificación del algoritmo de fuerzas**     |       25 | Estudié en detalle el proyecto y aunque no comprenda toda la sintaxis, puedo identificar su arquitectura, sus partes, puedo aislar una fuerza central, formular una predicción, la ejecuté ya analicé, comparé el resultado, cambié deliberadamente un signo o parámetro y expliqué la diferencia. |         **20** |
+| **Diseño de fuerzas e intención**             |       20 | Las fuerzas y sus parámetros hacen perceptible una intención; el comportamiento surge de la dinámica y no de trayectorias previamente dibujadas.                                                                                                                                                   |         **18** |
+| **Instrumento, score e interpretación**       |       15 | El score conecta la escucha con decisiones; escogí pocos controles expresivos y puedo conducir el sistema en vivo sin que el audio lo controle automáticamente.                                                                                                                                    |         **13** |
+| **Experimentación y criterio frente a la IA** |       10 | Comparé alternativas, registré hallazgos y descartes, corregí propuestas de IA y puedo justificar por qué conservé la versión presentada.                                                                                                                                                          |          **8** |
+| **Entrega técnica y documentación**           |        5 | la URL pública abre; la bitácora permite verificar el proceso.                                                                                                                                                                                                                                     |          **5** |
+| **Total Puntos**                              |  **100** | **Suma total de tu autoevaluación**                                                                                                                                                                                                                                                                |     **80/100** |
 
+
+Nota: 4
 
 
 
