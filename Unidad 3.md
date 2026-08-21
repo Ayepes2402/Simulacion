@@ -107,9 +107,6 @@ async function main() {
   };
 
   // --- NUEVO: GIROSCOPIO DE CÁMARA (3 EJES) ---
-  // Objeto plano compartido por referencia con el panel: al mover los
-  // sliders o tocar el botón, el panel edita estos valores directamente
-  // y el loop de animación los lee cada frame.
   const gyro = { enabled: false, speedX: 0, speedY: 0.3, speedZ: 0 };
   const gyroAxisX = new THREE.Vector3(1, 0, 0);
   const gyroAxisY = new THREE.Vector3(0, 1, 0);
@@ -161,6 +158,24 @@ async function main() {
     }
   };
 
+  // --- NUEVA FUNCIÓN PARA EL RESET COMPLETO ---
+  const handleReset = () => {
+    simulation.reset();
+    handleCompactSphere();              // Vuelve a hacer la forma de esfera
+    params.voiceOscillator.value = 1.0; // Fuerza el encendido del palpitar
+    
+    // Apaga cualquier efecto secundario (como el Warp/Torbellino)
+    autoFlow = false;
+    params.driftX.value = 0;
+    params.driftY.value = 0;
+    params.driftZ.value = 0;
+    params.flowSpeed.value = 3.0; 
+    gyro.enabled = false;
+    params.brightnessMultiplier.value = 1.0;
+    
+    panel?.refresh();
+  };
+
   const applyPreset = (id) => {
     params.initialSpeed.value = 0.35;
     params.driftX.value = 0;
@@ -169,8 +184,14 @@ async function main() {
     
     if (id === 'inertia') {
       params.initialSpeed.value = 0.8;
-    } else if (id === 'wind') {
-      params.driftX.value = 10.0;
+    } else if (id === 'warp') {
+      // Efecto W: Torbellino explosivo tridimensional
+      simulation.triggerBeat(); 
+      autoFlow = true;          
+      params.flowSpeed.value = 15.0; 
+      gyro.enabled = true;      
+      gyro.speedY = 1.2;        
+      params.brightnessMultiplier.value = 2.5; 
     }
     
     panel?.refresh();
@@ -187,7 +208,7 @@ async function main() {
 
   panel = createLabPanel({
     params,
-    onReset: () => simulation.reset(),
+    onReset: handleReset, // Ahora usa nuestro nuevo reset
     onModeChange: () => setMode(mode === 'LAB' ? 'PERFORMANCE' : 'LAB'),
     onPauseChange: () => paused = !paused,
     onBeat: () => simulation.triggerBeat(),
@@ -204,7 +225,7 @@ async function main() {
     onColumnCone: handleColumnCone,
     onToggleColumnWave: handleToggleColumnWave,
     onPresetInertia: () => applyPreset('inertia'),
-    onPresetWind: () => applyPreset('wind'),
+    onPresetWind: () => applyPreset('warp'), // Vinculado a 'warp'
     onSaveCameraSlot: saveCameraSlot,
     onTravelCameraSlot: moveToCameraSlot,
     gyro
@@ -218,7 +239,7 @@ async function main() {
   addEventListener('keydown', (event) => {
     if (event.repeat) return;
     if (event.code === 'KeyP') setMode(mode === 'LAB' ? 'PERFORMANCE' : 'LAB');
-    if (event.code === 'KeyR') simulation.reset();
+    if (event.code === 'KeyR') handleReset(); // Tecla R llama a nuestro nuevo reset
     if (event.code === 'KeyB') simulation.triggerBeat();
     if (event.code === 'Digit1' || event.code === 'Numpad1' || event.code === 'Key1') handleCreateCube();
     if (event.code === 'KeyD') handleDivideCube();
@@ -230,20 +251,18 @@ async function main() {
     if (event.code === 'KeyL') handleLightDown();
     if (event.code === 'KeyF') handleToggleFlow();
 
-    // Guardar posiciones con Shift + 4..7
     if (event.shiftKey && (event.code === 'Digit4' || event.code === 'Numpad4' || event.code === 'Key4')) saveCameraSlot(4);
     if (event.shiftKey && (event.code === 'Digit5' || event.code === 'Numpad5' || event.code === 'Key5')) saveCameraSlot(5);
     if (event.shiftKey && (event.code === 'Digit6' || event.code === 'Numpad6' || event.code === 'Key6')) saveCameraSlot(6);
     if (event.shiftKey && (event.code === 'Digit7' || event.code === 'Numpad7' || event.code === 'Key7')) saveCameraSlot(7);
 
-    // Viajar a posiciones con 4..7
     if (!event.shiftKey && (event.code === 'Digit4' || event.code === 'Numpad4' || event.code === 'Key4')) moveToCameraSlot(4);
     if (!event.shiftKey && (event.code === 'Digit5' || event.code === 'Numpad5' || event.code === 'Key5')) moveToCameraSlot(5);
     if (!event.shiftKey && (event.code === 'Digit6' || event.code === 'Numpad6' || event.code === 'Key6')) moveToCameraSlot(6);
     if (!event.shiftKey && (event.code === 'Digit7' || event.code === 'Numpad7' || event.code === 'Key7')) moveToCameraSlot(7);
 
     if (event.code === 'KeyI') applyPreset('inertia');
-    if (event.code === 'KeyW') applyPreset('wind');
+    if (event.code === 'KeyW') applyPreset('warp'); // W llama a 'warp'
     if (event.code === 'KeyC') handleToggleFreeze();
     if (event.code === 'KeyN') handleColumnCone();
     if (event.code === 'KeyM') handleToggleColumnWave();
@@ -256,8 +275,8 @@ async function main() {
     renderer.setSize(innerWidth, innerHeight);
   });
 
-  simulation.reset();
-  applyPreset('wind');
+  // Iniciamos la app con nuestro reset maestro
+  handleReset();
 
   let clock = new THREE.Clock();
 
