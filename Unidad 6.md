@@ -47,5 +47,5 @@ V / B: acelerar o ralentizar carrusel.
 <img width="300" height="300" alt="image" src="https://github.com/user-attachments/assets/7329a9d8-906d-4f1f-a635-ca19e0aa3134" />
 <img width="587" height="588" alt="image" src="https://github.com/user-attachments/assets/c932da03-a6e9-4443-b074-397e73ca31c1" />
 
-**Nota:**5
+**Nota:** 5
 
