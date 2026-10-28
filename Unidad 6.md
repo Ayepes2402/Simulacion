@@ -1,6 +1,6 @@
 **Canción:** https://www.youtube.com/watch?v=F6ofIaZpSGQ
 
-**Trabajo** [trabajo](https://ayepes2402.github.io/r6/)      
+**Trabajo** [link](https://ayepes2402.github.io/r6/)      
 
 **teclas:**  
 
